@@ -171,6 +171,47 @@
 
 # Реализация popover
 
+Еще в современном HTML существует возможность показывать и скрывать какой-либо элемент по клику на другой, для этого вам не придется писать ни одной строчки кода. 
+
+В этой части статьи речь пойдет о ```Popover API```, при помощи пары атрибутов элемента можно сделать всплывающее окно
+
+```html
+<div id="popover" popover>Я поповер</div>
+<button popovertarget="popover">Открыть поповер</button>
+```
+
+Атрибут ```popover``` делает элемент, собственно, поповером, ему нужно присвоить идентификатор и в кнопку нужно добавить атрибут ```popovertarget```, куда требуется передать идентификатор элемента, который нужно открыть.
+
+Так же, как и у ```<dialog>``` у элемента с атрибутом ```popover``` есть псевдоэлемент ```::backdrop``` и псевдокласс ```:popover-open```, что дает нам достаточно средств для стилизации. У элемента сразу из коробки доступно закрытие по нажатия на ```Esc``` или по клику вне области элемента.
+
+[Демо](https://codepen.io/klekovvlad/pen/GgpPOpb). Поддержка, в целом, неплохая, можно уже внедрять.
+![img_8.png](img_8.png)
+
+# Anchor Positioning
+
+Как часто вам нужно позиционировать какой-нибудь тултип, поповер или любую выпадающее меню относительно элемента? Для этой задачи уже тоже отлично подходит CSS. Для реализации якорного позиционирования нам нужно к двум элементам - родителю и дочернему добавить пару строк CSS.
+
+```css
+.parent {
+  anchor-name: --my-anchor;
+}
+
+.anchor {
+  position: fixed;
+  position-anchor: --my-anchor;
+  inset-block-start: anchor(self-end);
+  inset-inline-start: anchor(start)
+}
+```
+
+Разберем подробнее. ```anchor-name: --my-anchor;``` задает уникальное имя якорю, далее добавляем дочернему элементу свойство ```position-anchor: --my-anchor;``` с именем родителя и в свойствах определим отступ по-вертикали через ```inset-block-start``` и отступ по-горизонтали через ```inset-inline-start```. 
+
+Подробная таблица, как правильно позиционировать.
+![img_9.png](img_9.png)
+
+Еще это свойство отлично работает вместе с вышеупомянутым ```Popover API``` [посмотрите демо](https://codepen.io/klekovvlad/pen/yyYGPVb). Поддержка на данный момент слабовата
+![img_10.png](img_10.png)
+
 # Реализация аккордеона
 
 # Реализация якорных ссылок
@@ -235,13 +276,15 @@
 
 # Заключение
 
-Итог этой статьи прост - интересуйтесь новым и пробуйте новое. Используйте инструмент по-назначению.
+Я не раскрыл полностью каждую часть этой статьи, более подробно вы можете изучить из источников. Это мой первый опыт написания похожих работ, надеюсь, в скором времени, я соберу еще несколько интересных фич из мира HTML и CSS и напишу вторую часть. Итог этой статьи прост - интересуйтесь новым и пробуйте новое. Используйте инструмент по-назначению.
 
 # Источники
 
 * [MDN. Lazy loading](https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Lazy_loading)
 * [MDN. appearance](https://developer.mozilla.org/en-US/docs/Web/CSS/appearance)
 * [MDN. Dialog](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog)
+* [MDN. Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API)
+* [MDN. Using CSS anchor positioning](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning/Using)
 * [MDN. view-timeline](https://developer.mozilla.org/en-US/docs/Web/CSS/view-timeline)
 * [MDN. animation-timeline](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline)
 * [Building a media scroller component](https://web.dev/articles/building/a-media-scroller-component?hl=ru)
